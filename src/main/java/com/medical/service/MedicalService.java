@@ -41,7 +41,7 @@ public class MedicalService {
 	};
 
 	public List<Patient> addPatients(int n) {
-		return medicalRepository.addPatient(n, null);
+		return medicalRepository.add(n, null);
 	}
 
 	public Patient[] getAllPatients() {
@@ -58,7 +58,7 @@ public class MedicalService {
 	}
 
 	public List<Patient> deleteAllPatients() {
-		return medicalRepository.deletePatients();
+		return medicalRepository.deleteAll();
 	}
 
 	public List<Patient> deletePatientById(int n) {
@@ -94,8 +94,7 @@ public class MedicalService {
 						patients.add(patient);
 
 					});
-			List<Patient> allPatients = medicalRepository.addPatient(
-					patients.size(), patients);
+			List<Patient> allPatients = medicalRepository.add(patients.size(), patients);
 			bufferReader.close();
 			fos.close();
 			return allPatients;

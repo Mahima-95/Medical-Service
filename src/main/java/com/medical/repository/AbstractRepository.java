@@ -25,11 +25,12 @@ public abstract class AbstractRepository {
 
 	protected abstract <T> List<T> deleteById(int n);
 
-	protected abstract <T> List<T> addPatientInFile(List<T> t);
+	protected abstract <T> List<T> addListInFile(List<T> t);
 
 	@SuppressWarnings("unchecked")
 	protected <T> List<T> convertMapToList(Map<String, Object> map) {
-		return (List<T>) map.values().stream().parallel().collect(Collectors.toList());
+		return (List<T>) map.values().stream().parallel()
+				.collect(Collectors.toList());
 	}
 
 	protected void setPatientID(Object object) {
@@ -44,7 +45,7 @@ public abstract class AbstractRepository {
 
 		Patient[] patients = getAll(Patient[].class);
 		if (patients.length == 0) {
-			addPatientInFile(new ArrayList<>());
+			addListInFile(new ArrayList<>());
 		} else {
 			this.map = new HashMap<>();
 			for (Patient patient : patients) {
@@ -66,8 +67,8 @@ public abstract class AbstractRepository {
 		} else {
 			setIntoMap(n, patients);
 		}
-		return (List<T>) addPatientInFile(
-				Arrays.stream(map.values().toArray()).parallel().collect(Collectors.toList()));
+		return (List<T>) addListInFile(Arrays.stream(map.values().toArray())
+				.parallel().collect(Collectors.toList()));
 
 	}
 

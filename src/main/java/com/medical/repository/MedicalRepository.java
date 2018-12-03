@@ -19,13 +19,13 @@ public class MedicalRepository extends AbstractRepository {
 		constructAllMedicalMap();
 	}
 
-	public <T> List<T> addPatient(int n, List<Patient> patients) {
+	public <T> List<T> add(int n, List<Patient> patients) {
 		return addDataInList(n, patients);
 
 	}
 
 	@Override
-	public <T> List<T> addPatientInFile(List<T> t) {
+	public <T> List<T> addListInFile(List<T> t) {
 		try {
 			mapper.writeValue(new File(PATH + FILE_NAME), t);
 		} catch (IOException e) {
@@ -58,7 +58,7 @@ public class MedicalRepository extends AbstractRepository {
 						String value = String.valueOf(field.get(t));
 						if (value != null && map.containsKey(value)) {
 							map.put(value, t);
-							addPatientInFile(convertMapToList(map));
+							addListInFile(convertMapToList(map));
 							return (T) map.get(value);
 						}
 					} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -74,7 +74,8 @@ public class MedicalRepository extends AbstractRepository {
 	@Override
 	public <T> List<T> deleteById(int n) {
 
-		Object removed = map.remove(map.containsKey(String.valueOf(n)) ? String.valueOf(n) : null);
+		Object removed = map.remove(map.containsKey(String.valueOf(n)) ? String
+				.valueOf(n) : null);
 		if (removed != null) {
 			List<T> list = new ArrayList<>();
 			for (String key : map.keySet()) {
@@ -82,13 +83,13 @@ public class MedicalRepository extends AbstractRepository {
 			}
 			setPatientID(removed);
 
-			return (List<T>) addPatientInFile(list);
+			return (List<T>) addListInFile(list);
 		}
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T deletePatients() {
-		return (T) addPatientInFile(new ArrayList<>());
+	public <T> T deleteAll() {
+		return (T) addListInFile(new ArrayList<>());
 	}
 }
