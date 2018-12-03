@@ -20,7 +20,7 @@ public class MedicalRepository extends AbstractRepository {
 	}
 
 	public <T> List<T> addPatient(int n, List<Patient> patients) {
-		return convertDataInList(n, patients);
+		return addDataInList(n, patients);
 
 	}
 
@@ -35,7 +35,7 @@ public class MedicalRepository extends AbstractRepository {
 
 	}
 
-	public <T> T getAllPatients(Class<T> clazz) {
+	public <T> T getAll(Class<T> clazz) {
 
 		File file = new File(PATH + FILE_NAME);
 		try {
@@ -72,17 +72,17 @@ public class MedicalRepository extends AbstractRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> deletePatientById(int n) {
+	public <T> List<T> deleteById(int n) {
 
 		Object removed = map.remove(map.containsKey(String.valueOf(n)) ? String.valueOf(n) : null);
 		if (removed != null) {
-			List<Patient> patients = new ArrayList<>();
+			List<T> list = new ArrayList<>();
 			for (String key : map.keySet()) {
-				patients.add((Patient) map.get(key));
+				list.add((T) map.get(key));
 			}
 			setPatientID(removed);
 
-			return (List<T>) addPatientInFile(patients);
+			return (List<T>) addPatientInFile(list);
 		}
 		return null;
 	}
