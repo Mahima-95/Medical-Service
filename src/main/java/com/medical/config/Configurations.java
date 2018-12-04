@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Component
 public class Configurations {
@@ -25,5 +27,17 @@ public class Configurations {
 		dataSource.setUsername(username);
 		dataSource.setPassword(password);
 		return dataSource;
+	}
+
+	public static void getHostId() {
+
+		String computername;
+		try {
+			computername = InetAddress.getLocalHost().getHostName();
+			System.out.println(computername);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
