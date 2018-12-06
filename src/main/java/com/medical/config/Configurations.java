@@ -28,10 +28,10 @@ public class Configurations {
 		dataSource.setUrl(connectionUrl);
 		dataSource.setUsername(username);
 		dataSource.setPassword(password);
+		getHostId();
 		return dataSource;
 	}
 
-	@Bean
 	public void getHostId() {
 
 		String computername;
