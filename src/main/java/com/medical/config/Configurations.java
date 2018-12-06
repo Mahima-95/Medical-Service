@@ -4,12 +4,14 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-@Component
+@Configuration
 public class Configurations {
 
 	private String username = "root";
@@ -29,15 +31,15 @@ public class Configurations {
 		return dataSource;
 	}
 
-	public static void getHostId() {
+	@Bean
+	public void getHostId() {
 
 		String computername;
 		try {
 			computername = InetAddress.getLocalHost().getHostName();
-			System.out.println(computername);
+			System.out.println("computer name " + computername);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

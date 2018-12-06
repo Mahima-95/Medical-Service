@@ -90,6 +90,7 @@ public class MedicalRepository extends AbstractRepository {
 
 	@SuppressWarnings("unchecked")
 	public <T> T deleteAll() {
+		map.clear();
 		return (T) addListInFile(new ArrayList<>());
 	}
 }
