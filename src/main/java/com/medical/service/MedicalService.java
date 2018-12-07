@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Iterables;
+import com.medical.factory.FactoryService;
 import com.medical.model.Patient;
 import com.medical.repository.MedicalRepository;
 
@@ -27,6 +28,9 @@ public class MedicalService {
 	@Autowired
 	private MedicalRepository medicalRepository;
 
+	@Autowired
+	private FactoryService factoryService;
+	
 	@Autowired
 	public MedicalService(MedicalRepository medicalRepository) {
 		this.medicalRepository = medicalRepository;
@@ -45,7 +49,7 @@ public class MedicalService {
 	}
 
 	public Patient[] getAllPatients() {
-
+		factoryService.checkSystem();
 		Patient[] patients = medicalRepository.getAll(Patient[].class);
 		List<Patient> patientList = Arrays.stream(patients).parallel()
 				.collect(Collectors.toList());
