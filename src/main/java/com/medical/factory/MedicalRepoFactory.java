@@ -6,32 +6,33 @@ import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.medical.model.Patient;
-import com.medical.repository.MedicalRepository;
+import com.medical.repository.AbstractRepository;
+import com.medical.repository.MedicalDBRepository;
+import com.medical.repository.MedicalFileRepository;
 
 @Component
-public class FactoryService {
+public class MedicalRepoFactory {
 
 	@Autowired
-	MedicalRepository medicalRepository;
+	private MedicalFileRepository medicalFileRepository;
+	@Autowired
+	private MedicalDBRepository medicalDBRepository;
 
-	public String checkSystem() {
+	public AbstractRepository repositoryFactory() {
 		String computername;
 		try {
 			computername = InetAddress.getLocalHost().getHostName();
 			System.out.println("computer name " + computername);
 
 			if (computername.contains("XAV-101000702")) {
-				medicalRepository.getAll(Patient[].class);
+				return medicalFileRepository;
 			} else {
-				
+				return medicalDBRepository;
 			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 }

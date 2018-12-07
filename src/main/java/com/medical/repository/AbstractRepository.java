@@ -15,22 +15,21 @@ import com.medical.model.Patient;
 
 public abstract class AbstractRepository {
 
-	protected Map<String, Object> map = null;
-	protected TreeSet<Integer> GetIDSet = new TreeSet<>();
-	protected ObjectMapper mapper = new ObjectMapper();
-	protected static final String PATH = "src/main/resources/";
-	protected static final String FILE_NAME = "patient.json";
+	public Map<String, Object> map = null;
+	public TreeSet<Integer> GetIDSet = new TreeSet<>();
+	public ObjectMapper mapper = new ObjectMapper();
+	public static final String PATH = "src/main/resources/";
+	public static final String FILE_NAME = "patient.json";
 
-	protected abstract <T> T getAll(Class<T> clazz);
+	public abstract <T> T getAll(Class<T> clazz);
 
-	protected abstract <T> List<T> deleteById(int n);
+	public abstract <T> List<T> deleteById(int n);
 
-	protected abstract <T> List<T> addListInFile(List<T> t);
+	public abstract <T> List<T> addListInFile(List<T> t);
 
 	@SuppressWarnings("unchecked")
 	protected <T> List<T> convertMapToList(Map<String, Object> map) {
-		return (List<T>) map.values().stream().parallel()
-				.collect(Collectors.toList());
+		return (List<T>) map.values().stream().parallel().collect(Collectors.toList());
 	}
 
 	protected void setPatientID(Object object) {
@@ -67,8 +66,7 @@ public abstract class AbstractRepository {
 		} else {
 			setIntoMap(n, patients);
 		}
-		return (List<T>) addListInFile(Arrays.stream(map.values().toArray())
-				.parallel().collect(Collectors.toList()));
+		return (List<T>) addListInFile(Arrays.stream(map.values().toArray()).parallel().collect(Collectors.toList()));
 
 	}
 
@@ -122,4 +120,11 @@ public abstract class AbstractRepository {
 		patient.setProfilePicPath("path");
 		return patient;
 	}
+
+	public abstract <T> List<T> add(int n, List<Patient> patients);
+
+	public abstract <T> T update(T t);
+
+	public abstract <T> T deleteAll();
+
 }

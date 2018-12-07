@@ -13,12 +13,13 @@ import org.springframework.stereotype.Repository;
 import com.medical.model.Patient;
 
 @Repository
-public class MedicalRepository extends AbstractRepository {
+public class MedicalFileRepository extends AbstractRepository {
 
-	public MedicalRepository() {
+	public MedicalFileRepository() {
 		constructAllMedicalMap();
 	}
 
+	@Override
 	public <T> List<T> add(int n, List<Patient> patients) {
 		return addDataInList(n, patients);
 
@@ -35,6 +36,7 @@ public class MedicalRepository extends AbstractRepository {
 
 	}
 
+	@Override
 	public <T> T getAll(Class<T> clazz) {
 
 		File file = new File(PATH + FILE_NAME);
@@ -47,6 +49,7 @@ public class MedicalRepository extends AbstractRepository {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public <T> T update(T t) {
 
 		if (t != null) {
@@ -89,8 +92,10 @@ public class MedicalRepository extends AbstractRepository {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public <T> T deleteAll() {
 		map.clear();
 		return (T) addListInFile(new ArrayList<>());
 	}
+
 }
